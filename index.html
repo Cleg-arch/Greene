@@ -468,16 +468,79 @@ A key project I worked on involved tackling illegal mining in Ghana, where I hel
             </div>
         </section>
 
-        <section id="elevator">
-            <h2>Elevator Pitch</h2>
-            <div style="text-align: center; padding: 40px 0;">
-                <div style="max-width: 700px; margin: 0 auto; border: 2px dashed #ddd; border-radius: 10px; padding: 40px; background-color: #f9f9f9;">
-                    <i class="fas fa-video" style="font-size: 3rem; color: #bbb; margin-bottom: 20px;"></i>
-                    <h3>Coming Soon</h3>
-                    <p>My elevator pitch video will be available soon. Check back later to learn more about my professional journey, skills, and vision.</p>
-                </div>
-            </div>
-        </section>
+       <section id="elevator">
+    <h2>Elevator Pitch</h2>
+    <div style="text-align: center; padding: 40px 0;">
+        <div style="max-width: 700px; margin: 0 auto; border: 2px dashed #ddd; border-radius: 10px; padding: 40px; background-color: #f9f9f9;">
+            <div id="youtube-player" style="width: 100%; aspect-ratio: 16/9;"></div>
+            <h3>My Elevator Pitch</h3>
+            <p>Watch this video to learn more about my professional journey, skills, and vision.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+// Load YouTube API
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+var player;
+var isPlayerReady = false;
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('youtube-player', {
+        videoId: 'Z2xdVhtOams',
+        playerVars: {
+            'playsinline': 1,
+            'rel': 0,
+            'origin': window.location.origin
+        },
+        events: {
+            'onReady': onPlayerReady
+        }
+    });
+}
+
+function onPlayerReady(event) {
+    isPlayerReady = true;
+    checkIfSectionVisible();
+}
+
+// Check if the element is in the viewport
+function isElementInViewport(el) {
+    var rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+// Function to check if the section is visible and play the video
+function checkIfSectionVisible() {
+    var elevatorSection = document.getElementById('elevator');
+    
+    if (isPlayerReady && isElementInViewport(elevatorSection)) {
+        player.playVideo();
+    } else if (isPlayerReady) {
+        player.pauseVideo();
+    }
+}
+
+// Add scroll event listener
+window.addEventListener('scroll', checkIfSectionVisible);
+window.addEventListener('resize', checkIfSectionVisible);
+
+// Initial check when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    if (isPlayerReady) {
+        checkIfSectionVisible();
+    }
+});
+</script>
 
               
         <section id="contact">
